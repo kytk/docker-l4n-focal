@@ -1,6 +1,6 @@
 ## Dockerfile to make "docker-l4n"
 ## This file makes a container image of docker-lin4neuro with Japanese environment
-## K. Nemoto 05 Feb 2022
+## K. Nemoto 18 Dec 2022
 
 FROM ubuntu:20.04
 
@@ -14,26 +14,33 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     sed -i 's|http://us.|http://ja.|g' /etc/apt/sources.list && \
     apt-get update && \
-    apt-get install -y xfce4 xfce4-terminal xfce4-indicator-plugin \
-    xfce4-power-manager-plugins lightdm lightdm-gtk-greeter         \
-    shimmer-themes network-manager-gnome xinit build-essential      \
-    dkms thunar-archive-plugin file-roller gawk fonts-noto          \
-    xdg-utils 
+    apt-get install -y xfce4 xfce4-terminal xfce4-indicator-plugin  \
+     xfce4-clipman xfce4-clipman-plugin xfce4-statusnotifier-plugin  \
+     xfce4-power-manager-plugins xfce4-screenshooter \
+     lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings \
+     shimmer-themes network-manager-gnome xinit build-essential  \
+     dkms thunar-archive-plugin file-roller gawk xdg-utils 
 
 # Python
 RUN apt-get install -y pkg-config libopenblas-dev liblapack-dev    \
-    libhdf5-serial-dev graphviz python3-venv python3-pip python3-dev  \
-     python3-tk python-numpy
+    libhdf5-serial-dev graphviz python3-pip python3-venv python3-dev python3-tk
 
 # Install utilities
-RUN apt-get install -y at-spi2-core bc curl wget dc          \
-    default-jre evince exfat-fuse exfat-utils gedit          \
-    gnome-system-monitor gnome-system-tools                  \
-    imagemagick rename ntp tree unzip vim git    \
-    xfce4-screenshooter zip ntp tcsh xterm            \
-    libopenblas-base apturl gnupg software-properties-common \
-    unar firefox && \
-    apt-get purge -y xscreensaver
+RUN apt-get install -y at-spi2-core bc byobu curl wget dc \
+ default-jre evince exfat-fuse exfat-utils gedit  \
+ gnome-system-monitor gnome-system-tools gparted  \
+ imagemagick rename ntp system-config-printer-gnome  \
+ tree unzip update-manager vim alsa-base \
+ wajig xfce4-screenshooter zip ntp tcsh baobab xterm     \
+ bleachbit libopenblas-base cups apturl dmz-cursor-theme \
+ chntpw gddrescue p7zip-full gnupg eog meld libjpeg62 \
+ software-properties-common fonts-noto mupdf mupdf-tools pigz \
+ ristretto pinta firefox libreoffice libreoffice-l10n-ja
+ 
+# Install Google-chrome
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt install -y ./google-chrome-stable_current_amd64.deb
+RUN rm google-chrome-stable_current_amd64.deb
 
 
 # Japanese environment 
@@ -44,7 +51,7 @@ RUN apt-get install -y language-pack-ja manpages-ja \
 
 ##### Lin4Neuro #####
 RUN mkdir /etc/skel/git && cd /etc/skel/git && \
-    git clone https://gitlab.com/kytk/lin4neuro-bionic.git
+    git clone https://gitlab.com/kytk/lin4neuro-focal.git
 ENV parts=/etc/skel/git/lin4neuro-bionic/lin4neuro-parts
 
 # Icons and Applications
@@ -125,6 +132,18 @@ RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_softwa
     echo '' >> /etc/skel/.bash_aliases && \
     echo '#Surf_Ice' >> /etc/skel/.bash_aliases && \
     echo 'export PATH=$PATH:/usr/local/Surf_Ice' >> /etc/skel/.bash_aliases
+
+# FSL 6.0.6.1
+RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_software_packages/fsl-6.0.6.1.tar.gz && \
+    tar xvzf fsl-6.0.6.1.tar.gz && rm fsl-6.0.6.1.tar.gz && \
+    echo '' >> /etc/skel/.profile && \
+    echo '# FSL Setup' >> /etc/skel/.profile && \
+    echo 'FSLDIR=/usr/local/fsl' >> /etc/skel/.profile && \
+    echo 'PATH=${FSLDIR}/share/fsl/bin:${PATH}' >> /etc/skel/.profile && \
+    echo 'export FSLDIR PATH' >> /etc/skel/.profile && \
+    echo '. ${FSLDIR}/etc/fslconf/fsl.sh' >> /etc/skel/.profile
+
+
 
 # Change login shell to bash
 #RUN chsh -s /bin/bash

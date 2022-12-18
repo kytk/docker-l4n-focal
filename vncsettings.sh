@@ -5,7 +5,7 @@
 # K. Nemoto 05 Feb 2021
 
 if [ $# -lt 1 ]; then
-  RESOLUTION=1280x800
+  RESOLUTION=1680x1050
 else
   RESOLUTION=$1
 fi
