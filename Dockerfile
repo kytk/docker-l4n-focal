@@ -26,7 +26,7 @@ RUN apt-get install -y pkg-config libopenblas-dev liblapack-dev    \
     libhdf5-serial-dev graphviz python3-pip python3-venv python3-dev python3-tk
 
 # Install utilities
-RUN apt-get install -y at-spi2-core bc byobu curl wget dc \
+RUN apt-get install -y git at-spi2-core bc byobu curl wget dc \
  default-jre evince exfat-fuse exfat-utils gedit  \
  gnome-system-monitor gnome-system-tools gparted  \
  imagemagick rename ntp system-config-printer-gnome  \
