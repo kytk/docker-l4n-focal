@@ -52,7 +52,7 @@ RUN apt-get install -y language-pack-ja manpages-ja \
 ##### Lin4Neuro #####
 RUN mkdir /etc/skel/git && cd /etc/skel/git && \
     git clone https://gitlab.com/kytk/lin4neuro-focal.git
-ENV parts=/etc/skel/git/lin4neuro-bionic/lin4neuro-parts
+ENV parts=/etc/skel/git/lin4neuro-focal/lin4neuro-parts
 
 # Icons and Applications
 RUN mkdir -p /etc/skel/.local/share && \ 
