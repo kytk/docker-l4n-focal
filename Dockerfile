@@ -150,9 +150,8 @@ RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_softwa
 ##### Lin4Neuro settings end #####
 
 
-# TigerVNC and nonVNC
-RUN apt-get install -y tigervnc-standalone-server tigervnc-common \
-    novnc websockify
+# TigghtVNC and nonVNC
+RUN apt-get install -y tightvncserver novnc websockify
 
 ARG UID=1000
 RUN useradd -m -u ${UID} brain && echo "brain:lin4neuro" | chpasswd && adduser brain sudo
