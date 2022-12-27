@@ -41,10 +41,10 @@ RUN apt install -y ./google-chrome-stable_current_amd64.deb
 RUN rm google-chrome-stable_current_amd64.deb
 
 
-# Japanese environment 
-RUN apt-get install -y language-pack-ja manpages-ja \
-    fcitx fcitx-mozc fcitx-config-gtk \
-    nkf firefox-locale-ja im-config 
+## Japanese environment 
+#RUN apt-get install -y language-pack-ja manpages-ja \
+#    fcitx fcitx-mozc fcitx-config-gtk \
+#    nkf firefox-locale-ja im-config 
 
 
 ##### Lin4Neuro #####
@@ -144,12 +144,14 @@ RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_softwa
 
 
 # Change login shell to bash
-#RUN chsh -s /bin/bash
+RUN chsh -s /bin/bash
 ##### Lin4Neuro settings end #####
 
 
 # TigghtVNC and nonVNC
 RUN apt-get install -y tightvncserver novnc websockify
+RUN apt-get install ufw
+RUN ufw allow 5900 && ufw allow 5901
 
 ARG UID=1000
 RUN useradd -m -u ${UID} brain && echo "brain:lin4neuro" | chpasswd && adduser brain sudo
