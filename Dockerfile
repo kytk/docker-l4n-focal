@@ -12,8 +12,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # XFCE
 RUN apt-get update && \
-    sed -i 's|http://us.|http://ja.|g' /etc/apt/sources.list && \
-    apt-get update && \
     apt-get install -y xfce4 xfce4-terminal xfce4-indicator-plugin  \
      xfce4-clipman xfce4-clipman-plugin xfce4-statusnotifier-plugin  \
      xfce4-power-manager-plugins xfce4-screenshooter \
