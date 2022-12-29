@@ -11,5 +11,10 @@ else
 fi
 
 USER=brain vncserver :1 -geometry ${RESOLUTION} -depth 24
+USER=brain vncserver -kill :1
+
+echo "startxfce4" >> ~/.vnc/xstartup
+
+USER=brain vncserver :1 -geometry ${RESOLUTION} -depth 24
 sudo websockify -D --web=/usr/share/novnc/ 80 localhost:5901
 

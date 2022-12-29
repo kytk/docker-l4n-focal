@@ -1,6 +1,6 @@
 ## Dockerfile to make "docker-l4n"
-## This file makes a container image of docker-lin4neuro with Japanese environment
-## K. Nemoto 18 Dec 2022
+## This file makes a container image of docker-lin4neuro
+## K. Nemoto 29 Dec 2022
 
 FROM ubuntu:20.04
 
@@ -164,6 +164,5 @@ ENV QT_IM_MODULE=fcitx
 ENV XMODIFIERS=@im=fcitx
 ENV GTK_IM_MODULE=fcitx
 
-COPY xstartup /home/brain/.vnc/
 COPY vncsettings.sh /home/brain
 COPY jpsettings.sh /home/brain
