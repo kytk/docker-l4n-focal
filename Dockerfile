@@ -164,6 +164,6 @@ ENV QT_IM_MODULE=fcitx
 ENV XMODIFIERS=@im=fcitx
 ENV GTK_IM_MODULE=fcitx
 
+COPY xstartup /home/brain/.vnc/
 COPY vncsettings.sh /home/brain
 COPY jpsettings.sh /home/brain
-
