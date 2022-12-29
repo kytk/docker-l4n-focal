@@ -1,13 +1,13 @@
-# docker-l4n-focal-ja
+# docker-l4n-focal
 
-- 日本語版Lin4Neuro (Ubuntu 20.04) のDockerイメージ
+- Lin4Neuro (Ubuntu 20.04) のDockerイメージ
 
 ## 使い方
 
 - ターミナルで以下をタイプしてください
 
 ```
-docker run -it -p 6080:80 --shm-size=1024m kytk/docker-l4n-focal-ja:latest
+docker run -it -p 6080:80 --shm-size=1024m kytk/docker-l4n-focal:latest
 
 ```
 
