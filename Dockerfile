@@ -1,6 +1,6 @@
 ## Dockerfile to make "docker-l4n"
 ## This file makes a container image of docker-lin4neuro
-## K. Nemoto 29 Dec 2022
+## K. Nemoto 01 Ape 2023
 
 FROM ubuntu:20.04
 
@@ -21,10 +21,11 @@ RUN apt-get update && \
 
 # Python
 RUN apt-get install -y pkg-config libopenblas-dev liblapack-dev    \
-    libhdf5-serial-dev graphviz python3-pip python3-venv python3-dev python3-tk
+    libhdf5-serial-dev graphviz python3-venv python3-pip python3-dev  \
+     python3-tk python-numpy
 
 # Install utilities
-RUN apt-get install -y git at-spi2-core bc byobu curl wget dc \
+RUN apt-get install -y git apt-utils at-spi2-core bc byobu curl wget dc \
  default-jre evince exfat-fuse exfat-utils gedit  \
  gnome-system-monitor gnome-system-tools gparted  \
  imagemagick rename ntp system-config-printer-gnome  \
@@ -66,10 +67,9 @@ RUN mkdir -p /etc/skel/.local/share/desktop-directories && \
     cp ${parts}/local/share/desktop-directories/Neuroimaging.directory \
        /etc/skel/.local/share/desktop-directories
 
-
 # Background image and remove an unnecessary image file
-RUN cp ${parts}/backgrounds/deep_ocean.png /usr/share/backgrounds 
-
+RUN cp ${parts}/backgrounds/deep_ocean.png /usr/share/backgrounds && \
+    ln -s /usr/share/backgrounds/deep_ocean.png /usr/share/backgrounds/xfce/xfce-stripes.png
 
 # Customized panel, desktop, and theme
 RUN cp -r ${parts}/config/xfce4 /etc/skel/.config
@@ -131,9 +131,9 @@ RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_softwa
     echo '#Surf_Ice' >> /etc/skel/.bash_aliases && \
     echo 'export PATH=$PATH:/usr/local/Surf_Ice' >> /etc/skel/.bash_aliases
 
-# FSL 6.0.6.1
-RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_software_packages/fsl-6.0.6.1.tar.gz && \
-    tar xvzf fsl-6.0.6.1.tar.gz && rm fsl-6.0.6.1.tar.gz && \
+# FSL 6.0.6.4
+RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_software_packages/fsl-6.0.6.4.tar.gz && \
+    tar xvzf fsl-6.0.6.4.tar.gz && rm fsl-6.0.6.4.tar.gz && \
     echo '' >> /etc/skel/.profile && \
     echo '# FSL Setup' >> /etc/skel/.profile && \
     echo 'FSLDIR=/usr/local/fsl' >> /etc/skel/.profile && \
@@ -144,14 +144,13 @@ RUN cd /usr/local && wget http://www.lin4neuro.net/lin4neuro/neuroimaging_softwa
 
 
 # Change login shell to bash
-RUN chsh -s /bin/bash
+#RUN chsh -s /bin/bash
 ##### Lin4Neuro settings end #####
 
 
-# TigghtVNC and nonVNC
-RUN apt-get install -y tightvncserver novnc websockify
-RUN apt-get install ufw
-RUN ufw allow 5900 && ufw allow 5901
+# TigerVNC and nonVNC
+RUN apt-get install -y tigervnc-standalone-server tigervnc-common \
+    novnc websockify
 
 ARG UID=1000
 RUN useradd -m -u ${UID} brain && echo "brain:lin4neuro" | chpasswd && adduser brain sudo
@@ -159,10 +158,14 @@ RUN useradd -m -u ${UID} brain && echo "brain:lin4neuro" | chpasswd && adduser b
 USER brain
 
 ENV SHELL=/bin/bash
-ENV QT4_IM_MODULE=fcitx
-ENV QT_IM_MODULE=fcitx
-ENV XMODIFIERS=@im=fcitx
-ENV GTK_IM_MODULE=fcitx
+#ENV QT4_IM_MODULE=fcitx
+#ENV QT_IM_MODULE=fcitx
+#ENV XMODIFIERS=@im=fcitx
+#ENV GTK_IM_MODULE=fcitx
 
 COPY vncsettings.sh /home/brain
-COPY jpsettings.sh /home/brain
+#COPY jpsettings.sh /home/brain
+COPY source_rc_profile.sh /home/brain
+
+
+
