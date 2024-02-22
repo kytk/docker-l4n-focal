@@ -164,7 +164,7 @@ ENV SHELL=/bin/bash
 #ENV GTK_IM_MODULE=fcitx
 
 COPY vncsettings.sh /home/brain
-#COPY jpsettings.sh /home/brain
+COPY jpsettings.sh /home/brain
 COPY source_rc_profile.sh /home/brain
 
 
