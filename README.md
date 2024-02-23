@@ -1,5 +1,57 @@
 # docker-l4n-focal
 
+## English
+
+- Docker image of Lin4Neuro (Ubuntu 20.04)
+
+## How to use
+
+- Please type the following in the terminal:
+
+```
+docker run -it -p 6080:80 --shm-size=1024m kytk/docker-l4n-focal:latest
+
+```
+
+- This will start the container.
+
+- Next, in the home directory, run "vncsettings.sh". You can specify the resolution as an argument. If not specified, it will be 1680x1050.
+
+- For example, if you want to set the resolution to 1920x1080, type the following:
+
+```
+cd
+./vncsetings.sh 1920x1080
+```
+
+- You will set a password. You can choose whatever you like, but here we will use 'lin4neuro'.
+
+```
+You will require a password to access your desktops.
+
+Password:lin4neuro
+Verify:lin4neuro
+Would you like to enter a view-only password (y/n)? n
+```
+
+- Next, the script will ask for a password for brain. It is 'lin4neuro'.
+
+```
+[sudo] password for brain: lin4neuro
+```
+
+- You are now ready to go. Next, launch a browser on your host and type the following:
+
+```
+localhost:6080/vnc.html
+```
+
+If you enter the password 'lin4neuro', it will start.
+
+
+
+## Japanese
+
 - Lin4Neuro (Ubuntu 20.04) のDockerイメージ
 
 ## 使い方
@@ -27,7 +79,7 @@ cd
 
 ```
 cd
-vncsetings.sh 1920x1080
+./vncsetings.sh 1920x1080
 ```
 
 - パスワードを設定します。自分の好みでいいのですが、ここでは 'lin4neuro' とします。
