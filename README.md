@@ -15,12 +15,18 @@ docker run -it -p 6080:80 --shm-size=1024m kytk/docker-l4n-focal:latest
 
 - This will start the container.
 
-- Next, in the home directory, run "vncsettings.sh". You can specify the resolution as an argument. If not specified, it will be 1680x1050.
+- Next, in the home directory, run "source_rc_profile.sh". This will source .profile and .bashrc:
+
+```
+cd
+./source_rc_profile.sh
+```
+
+- Then, in the home directory, run "vncsettings.sh". You can specify the resolution as an argument. If not specified, it will be 1680x1050.
 
 - For example, if you want to set the resolution to 1920x1080, type the following:
 
 ```
-cd
 ./vncsetings.sh 1920x1080
 ```
 
@@ -64,6 +70,13 @@ docker run -it -p 6080:80 --shm-size=1024m kytk/docker-l4n-focal:latest
 ```
 
 - こうするとコンテナが起動します。
+
+- 次に .bashrc と .profile を以下で読み込みます
+
+```
+cd
+./source_rc_profile.sh
+```
 
 - ホームディレクトリで "jpsettings.sh" を実行します。ホームディレクトリのディレクトリを英語化すると同時に、日本語の設定をします。これは1回だけで大丈夫です。
 
